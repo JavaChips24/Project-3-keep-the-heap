@@ -1,6 +1,4 @@
 import java.util.Arrays;
-
-import java.util.Arrays;
 /**
    A class that implements the ADT maxheap by using an array.
  
@@ -37,6 +35,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
       lastIndex = 0;
       integrityOK = true;
    } // end constructor
+
 
    public void add(T newEntry)
    {
@@ -173,4 +172,21 @@ public final class MaxHeap<T extends Comparable<? super T>>
         heap[rootIndex] = orphan;
         return tempSwaps;
     } // end reheap (powerpoint version)
+
+
+  /*   public MaxHeap(T[]entries){
+      this(entries.length);
+      lastIndex = entries.length;
+      // Assertion: integrityOK = true
+
+      // Copy given array to data field
+      for (int index = 0; index < entries.length; index++)
+      heap[index + 1 ] = entries [index];
+
+      // Create Heap
+      for( int rootIndex = lastIndex / 2; rootIndex > 0; rootIndex--)
+      reheap(rootIndex);
+
+    } */ // end constructor 
+    
 } // end MaxHeap
