@@ -8,7 +8,7 @@ Role: JUnit test cases, MaxHeapDriver contributer, OutputFile
 
 <br>
 #Member 2: Cesar Gomez, cesargomez@cpp.edu, Github: cgomez506<br>
-Role:
+Role: MaxHeap contributer,MaxHeapInterface
 <br>
 
 #Member 3: Ashley Mapes, asmapes@cpp.edu, GitHub: ashleymapes<br>
