@@ -7,8 +7,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
+/**
+   A driver that outputs data about a given heap
+ 
+   @author Isabelle Guevara
+   @author Cesar Gomez
+   @author Ashley Mapes
+   @version 1.0
+*/
 public class MaxHeapDriver {
+    
+    /** Main method that runs the program
+     * creates files describing a given heap
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         boolean isRunning = true;
         Scanner scnr = new Scanner(System.in);
@@ -50,10 +63,25 @@ public class MaxHeapDriver {
 
     }
 
+    
+    /** 
+     * output both sequential and smart results of a given file to an output file
+     * 
+     * @param filename Name of the file to be analyzed
+     * @param outputFileName Name of the file to be outputted
+     * @throws IOException
+     */
     public static void outputFinalFile( String filename, String outputFileName) throws IOException{
         resultFileWriterSequential( filename, outputFileName );
         resultFileWriterSmart( filename, outputFileName);
     }
+    
+    
+    /** 
+     * 
+     * @param filename name of file to be analyzed
+     * @return MaxHeap<Integer> containing all integers in given file
+     */
     public static MaxHeap<Integer> fileToSequentialMaxHeap(String filename){
         List<Integer> dataArrayList = new ArrayList<>();
         try {
@@ -73,7 +101,11 @@ public class MaxHeapDriver {
         newMaxHeap.createHeap_Sequential(dataArray);
         return newMaxHeap;
     }
-
+    /** 
+     * 
+     * @param filename name of file to be analyzed
+     * @return MaxHeap<Integer> containing all integers in given file
+     */
     public static MaxHeap<Integer> fileToSmartMaxHeap(String filename){
         List<Integer> dataArrayList = new ArrayList<>();
         try {
@@ -94,6 +126,12 @@ public class MaxHeapDriver {
         return newMaxHeap;
     }
 
+    
+    /** 
+     * @param inputFileName name of file to be analyzed
+     * @param outputFileName name of file to be outputted
+     * @throws IOException
+     */
     public static void resultFileWriterSequential(String inputFileName, String outputFileName) throws IOException{
         //Set up so files can be written on
         File resultFileName = new File(outputFileName);
@@ -126,6 +164,12 @@ public class MaxHeapDriver {
     }
 
     
+    
+    /** 
+     * @param inputFileName name of file to be analyzed
+     * @param outputFileName name of file to be outputted
+     * @throws IOException
+     */
     public static void resultFileWriterSmart(String inputFileName, String outputFileName) throws IOException{
         //Set up so files can be written on
         File resultFileName = new File(outputFileName);
