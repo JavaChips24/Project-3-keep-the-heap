@@ -54,10 +54,9 @@ public class MaxHeapDriver {
     }
 
     public static void resultFileWriterSequential(String inputFileName) throws IOException{
-        System.out.println("line 34");
         //Set up so files can be written on
         File resultFileName = new File("OutputFile.txt");
-        FileWriter myWriter = new FileWriter(resultFileName);
+        FileWriter myWriter = new FileWriter(resultFileName, true);
         //Store first 10 values in a list
         // Create an array to hold the first ten elements
         MaxHeap<Integer> inputHeap = fileToSequentialMaxHeap(inputFileName);
@@ -75,11 +74,11 @@ public class MaxHeapDriver {
             inputHeap.removeMax();
         }
         //First Line of printing
-        myWriter.write("Heap built using sequential insertions: " + Arrays.toString(firstTenArray));
+        myWriter.write("\nHeap built using sequential insertions: " + Arrays.toString(firstTenArray));
         //Second Line of printing
         myWriter.write("\nNumber of swaps in the heap creation: " + inputHeap.getSwaps());
         //Third Line of Printing
-        myWriter.write("\nHeap after 10 removals: " + Arrays.toString(nextTenArray));
+        myWriter.write("\nHeap after 10 removals: " + Arrays.toString(nextTenArray) + "\n\n\n");
   
         myWriter.flush();
         myWriter.close();
@@ -87,10 +86,9 @@ public class MaxHeapDriver {
 
     
     public static void resultFileWriterSmart(String inputFileName) throws IOException{
-        System.out.println("line 34");
         //Set up so files can be written on
         File resultFileName = new File("OutputFile.txt");
-        FileWriter myWriter = new FileWriter(resultFileName);
+        FileWriter myWriter = new FileWriter(resultFileName, true);
         //Store first 10 values in a list
         // Create an array to hold the first ten elements
         MaxHeap<Integer> inputHeap = fileToSmartMaxHeap(inputFileName);
@@ -109,7 +107,7 @@ public class MaxHeapDriver {
             inputHeap.removeMax();
         }
         //First Line of printing
-        myWriter.write("Heap built using optimal method: " + Arrays.toString(firstTenArray));
+        myWriter.write("\nHeap built using optimal method: " + Arrays.toString(firstTenArray));
         //Second Line of printing
         myWriter.write("\nNumber of swaps in the heap creation: " + inputHeap.getSwaps());
         //Third Line of Printing
