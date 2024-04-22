@@ -34,4 +34,6 @@ public interface MaxHeapInterface<T extends Comparable<? super T>>
    public void clear();
 
    public void createHeap_SmartWay(T[]entries);
+
+   public void createHeap_Sequential(T[]entries);
 } // end MaxHeapInterface
