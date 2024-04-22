@@ -4,7 +4,7 @@ Project Keep the Heap for CS2400
 Group Name: JavaChips <br>
 ### Members:
 #Member 1: Isabelle Guevara, Igguevara@cpp.edu, Github: IsabelleGueva<br>
-Role: JUnit test cases
+Role: JUnit test cases, MaxHeapDriver contributer, OutputFile
 
 <br>
 #Member 2: Cesar Gomez, cesargomez@cpp.edu, Github: cgomez506<br>
