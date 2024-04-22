@@ -52,8 +52,8 @@ public final class MaxHeap<T extends Comparable<? super T>>
     * @param entries The array containing the content of max heap.
     */
    public void createHeap_Sequential(T[] entries) {
-   	  optimal = false;
-	    checkCapacity(entries.length);
+      optimal = false;
+	   checkCapacity(entries.length);
       
       int tempSwaps = 0;
 
@@ -217,13 +217,12 @@ public final class MaxHeap<T extends Comparable<? super T>>
       int leftChildIndex = 2 * rootIndex;
 
       while(!done && (leftChildIndex <= lastIndex)) {
-         int largerChildIndex = leftChildIndex;
+         int largerChildIndex = leftChildIndex; // Assume larger
          int rightChildIndex = leftChildIndex + 1;
 
-         if ((rightChildIndex <= lastIndex) &&
-               heap[rightChildIndex].compareTo(heap[largerChildIndex]) > 0) {
+         if ((rightChildIndex <= lastIndex) && heap[rightChildIndex].compareTo(heap[largerChildIndex]) > 0) {
                   
-                  largerChildIndex = rightChildIndex;
+            largerChildIndex = rightChildIndex;
 
          }
 
