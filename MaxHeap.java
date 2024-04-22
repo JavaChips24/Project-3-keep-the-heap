@@ -174,7 +174,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
     } // end reheap (powerpoint version)
 
 
-  /*   public MaxHeap(T[]entries){
+  public MaxHeap(T[]entries){
       this(entries.length);
       lastIndex = entries.length;
       // Assertion: integrityOK = true
@@ -187,6 +187,6 @@ public final class MaxHeap<T extends Comparable<? super T>>
       for( int rootIndex = lastIndex / 2; rootIndex > 0; rootIndex--)
       reheap(rootIndex);
 
-    } */ // end constructor 
+    }  // end constructor 
     
 } // end MaxHeap
