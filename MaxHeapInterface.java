@@ -32,4 +32,6 @@ public interface MaxHeapInterface<T extends Comparable<? super T>>
 
    /** Removes all entries from this heap. */
    public void clear();
+
+   public void createHeap_SmartWay(T[]entries);
 } // end MaxHeapInterface
