@@ -1,12 +1,14 @@
 import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.junit.Test;
 public class MaxHeap_UnitTesting{
-    public static List<Integer> fileToArray(String filename){
+    public MaxHeap<Integer> fileToMaxHeap(String filename){
         List<Integer> dataArrayList = new ArrayList<>();
         try {
             File myObj = new File(filename);
@@ -20,15 +22,42 @@ public class MaxHeap_UnitTesting{
             System.out.println("An error occurred.");
             e.printStackTrace();
           }
-        return dataArrayList;
+        Integer[]dataArray = (Integer[]) dataArrayList.toArray();
+        MaxHeap<Integer> newMaxHeap = new MaxHeap<>(dataArray);
+        return newMaxHeap;
     }
-    public static void main(String[] args) {
-        File  = new File("filename.txt");
-        List<Integer> randomArray = fileToArray("data_random.txt");
-        for(int i = 0; i <=10; i++){
+    public void resultFileWriter(String resultFileName, String inputFileName) throws IOException{
+        //Set up so files can be written on
+        File resultFile = new File(resultFileName);
+        FileWriter myWriter = new FileWriter(resultFileName);
+        //Store first 10 values in a list
+        // Create an array to hold the first ten elements
+        MaxHeap inputHeap = fileToMaxHeap(inputFileName);
+        int[] firstTenArray = new int[10];
+        int[] nextTenArray = new int[10];
 
+
+        // Copy the first ten elements from the inputHeap to the new array
+        for(int i = 0; i<=10; i++){
+            firstTenArray[i] = (int) inputHeap.getMax();
+            inputHeap.removeMax();
         }
-      }
+        //Next ten after removal from heap
+        for(int i = 0; i<=10; i++){
+            nextTenArray[i] = (int) inputHeap.getMax();
+            inputHeap.removeMax();
+        }
+        //First Line of printing
+        myWriter.write("Heap built using sequential insertions: " + firstTenArray);
+        //Second Line of printing
+        myWriter.write("Number of swaps in the heap creation: " + inputHeap.getSwaps());
+        //Third Line of Printing
+        myWriter.write("Heap after 10 removals: " + nextTenArray);
+
+        myWriter.close();
+        }
+    
+
     @Test
     public void testIsEmptyNewHeap() {
         var nonEmptyHeap = new MaxHeap<Integer>();
