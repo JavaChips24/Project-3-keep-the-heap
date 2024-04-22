@@ -26,9 +26,9 @@ public class MaxHeap_UnitTesting{
         MaxHeap<Integer> newMaxHeap = new MaxHeap<>(dataArray);
         return newMaxHeap;
     }
-    public void resultFileWriter(String resultFileName, String inputFileName) throws IOException{
+    public void resultFileWriter(String inputFileName) throws IOException{
         //Set up so files can be written on
-        File resultFile = new File(resultFileName);
+        File resultFileName = new File("OutputFile.txt");
         FileWriter myWriter = new FileWriter(resultFileName);
         //Store first 10 values in a list
         // Create an array to hold the first ten elements
