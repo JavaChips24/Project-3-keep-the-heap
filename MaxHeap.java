@@ -17,7 +17,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
              implements MaxHeapInterface<T>
 {
    private T[] heap;                // Array of heap entries; ignore heap[0]
-   private int swaps = 0;           // Number of swaps performed during creation
+   private int swaps;           // Number of swaps performed during creation
    private boolean optimal = false; // True if used optimal, false if used sequential in heap creation
    private int lastIndex;           // Index of last entry and number of entries
    private boolean integrityOK = false;
@@ -61,7 +61,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
          tempSwaps = this.add(entries[index]) + tempSwaps;
       }
 
-      swaps = tempSwaps;
+      this.swaps = tempSwaps;
    } 
    
    /**
@@ -85,7 +85,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
          tempSwaps = reheap(rootIndex) + tempSwaps;
 
 
-      swaps = tempSwaps;    
+      this.swaps = tempSwaps;    
    } // end constructor
 
    public boolean getMethod() {

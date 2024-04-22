@@ -67,4 +67,39 @@ public class MaxHeapUnitTesting{
         assertTrue("max should be 12", reheapTest.getMax() == 12 );
         assertTrue("size should be 6", reheapTest.getSize() == 6);
     }
+
+    @Test
+    public void testSwapsOnSequentialInsertions() {
+        MaxHeap<Integer> maxheap = new MaxHeap<>();
+        Integer[] elements = {3, 2, 1, 5, 4};
+        maxheap.createHeap_Sequential(elements);
+        assertTrue("Swaps should be greater than 0 after sequential insertions", maxheap.getSwaps() > 0);
+    }
+
+    @Test
+    public void testSwapsOnOptimalMethod() {
+        MaxHeap<Integer> maxheap = new MaxHeap<>();
+        Integer[] elements = {3, 2, 1, 5, 4};
+        maxheap.createHeap_SmartWay(elements);
+        assertTrue("Swaps should be greater than 0 after optimal method", maxheap.getSwaps() > 0);
+    }
+
+    @Test
+    public void testNoSwapsOnEmptyHeap() {
+        MaxHeap<Integer> maxheap = new MaxHeap<>();
+        Integer[] elements = {};
+        maxheap.createHeap_Sequential(elements);
+        assertEquals("Swaps should be 0 for an empty heap", 0, maxheap.getSwaps());
+    }
+
+    @Test
+    public void testNoSwapsOnSingleElementHeap() {
+        Integer[] elements = {1};
+        MaxHeap<Integer> maxheap = new MaxHeap<>();
+        maxheap.createHeap_Sequential(elements);
+        assertEquals("Swaps should be 0 for a single-element heap", 0, maxheap.getSwaps());
+    }
+
+    // Add more tests as needed to cover different scenarios and edge cases.
+
 }
