@@ -11,7 +11,10 @@ import java.util.Scanner;
 public class MaxHeapDriver {
     public static void main(String[] args) throws IOException {
         resultFileWriterSequential("data_random.txt");
+        resultFileWriterSmart("data_random.txt");
         resultFileWriterSequential("data_sorted.txt");
+        resultFileWriterSmart("data_sorted.txt");
+
     }
     public static MaxHeap<Integer> fileToSequentialMaxHeap(String filename){
         List<Integer> dataArrayList = new ArrayList<>();
