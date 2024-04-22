@@ -1,0 +1,10 @@
+
+Heap built using sequential insertions: [997, 991, 982, 982, 972, 960, 953, 944, 944, 931]
+Number of swaps in the heap creation: 114
+Heap after 10 removals: [924, 913, 904, 882, 880, 874, 872, 865, 862, 854]
+
+
+
+Heap built using optimal method: [997, 991, 982, 982, 972, 960, 953, 944, 944, 931]
+Number of swaps in the heap creation: 71
+Heap after 10 removals: [924, 913, 904, 882, 880, 874, 872, 865, 862, 854]

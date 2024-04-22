@@ -10,11 +10,49 @@ import java.util.Scanner;
 
 public class MaxHeapDriver {
     public static void main(String[] args) throws IOException {
-        resultFileWriterSequential("data_random.txt");
-        resultFileWriterSmart("data_random.txt");
-        resultFileWriterSequential("data_sorted.txt");
-        resultFileWriterSmart("data_sorted.txt");
+        boolean isRunning = true;
+        Scanner scnr = new Scanner(System.in);
+        String inputFileName, outputFileName, response;
 
+        System.out.println( "Welcome to Keep the Heap!");
+        for( int i = 0; i < 40; i++ )
+        {
+            System.out.print("-");
+        }
+        System.out.println();
+        System.out.print("Enter 'n' to skip the user interface: ");
+        response = scnr.next();
+        if( response.equals("n")){
+            outputFinalFile("data_sorted.txt", "output1.txt");
+            outputFinalFile("data_random.txt", "output2.txt");
+            System.out.println( "\nOutput files created...");
+        }
+        else{
+            while(isRunning){
+                System.out.print("Please enter the name or path of an input file: ");
+                inputFileName = scnr.next();
+                System.out.print("Please enter the name of the outputfile: ");
+                outputFileName = scnr.next();
+                outputFinalFile(inputFileName, outputFileName);
+                System.out.println( "\nOutput file created.");
+                for( int i = 0; i < 40; i++ )
+                {
+                    System.out.print("-");
+                }
+                System.out.print("\nIf you would like to read another file, enter 'y' (enter anything else to exit): ");
+                response = scnr.next();
+                if( !response.equals("y") )
+                    isRunning = false;
+            }
+            System.out.println("Thank you for using our program...");
+        }
+        scnr.close();
+
+    }
+
+    public static void outputFinalFile( String filename, String outputFileName) throws IOException{
+        resultFileWriterSequential( filename, outputFileName );
+        resultFileWriterSmart( filename, outputFileName);
     }
     public static MaxHeap<Integer> fileToSequentialMaxHeap(String filename){
         List<Integer> dataArrayList = new ArrayList<>();
@@ -56,9 +94,9 @@ public class MaxHeapDriver {
         return newMaxHeap;
     }
 
-    public static void resultFileWriterSequential(String inputFileName) throws IOException{
+    public static void resultFileWriterSequential(String inputFileName, String outputFileName) throws IOException{
         //Set up so files can be written on
-        File resultFileName = new File("OutputFile.txt");
+        File resultFileName = new File(outputFileName);
         FileWriter myWriter = new FileWriter(resultFileName, true);
         //Store first 10 values in a list
         // Create an array to hold the first ten elements
@@ -88,9 +126,9 @@ public class MaxHeapDriver {
     }
 
     
-    public static void resultFileWriterSmart(String inputFileName) throws IOException{
+    public static void resultFileWriterSmart(String inputFileName, String outputFileName) throws IOException{
         //Set up so files can be written on
-        File resultFileName = new File("OutputFile.txt");
+        File resultFileName = new File(outputFileName);
         FileWriter myWriter = new FileWriter(resultFileName, true);
         //Store first 10 values in a list
         // Create an array to hold the first ten elements
