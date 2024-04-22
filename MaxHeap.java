@@ -9,10 +9,12 @@ import java.util.Arrays;
 public final class MaxHeap<T extends Comparable<? super T>>
              implements MaxHeapInterface<T>
 {
-   private T[] heap;      // Array of heap entries; ignore heap[0]
-   private int lastIndex; // Index of last entry and number of entries
+   private T[] heap;                // Array of heap entries; ignore heap[0]
+   private int swaps = 0;           // Number of swaps performed during creation
+   private boolean optimal = false; // True if used optimal, false if used sequential in heap creation
+   private int lastIndex;           // Index of last entry and number of entries
    private boolean integrityOK = false;
-	private static final int DEFAULT_CAPACITY = 25;
+	private static final int DEFAULT_CAPACITY = 100;
 	private static final int MAX_CAPACITY = 10000;
    
    public MaxHeap()
@@ -22,10 +24,10 @@ public final class MaxHeap<T extends Comparable<? super T>>
    
    public MaxHeap(int initialCapacity)
    {
-      // Is initialCapacity too small?
+      // Asks if initialCapacity is too small?
       if (initialCapacity < DEFAULT_CAPACITY)
          initialCapacity = DEFAULT_CAPACITY;
-      else // Is initialCapacity too big?
+      else // Asks if initialCapacity is too big?
          checkCapacity(initialCapacity);
       
       // The cast is safe because the new array contains null entries
@@ -37,38 +39,103 @@ public final class MaxHeap<T extends Comparable<? super T>>
    } // end constructor
 
 
-   public void add(T newEntry)
-   {
-        checkIntegrity();        // Ensure initialization of data fields
-        int newIndex = lastIndex + 1;
-        int parentIndex = newIndex / 2;
-        while ( (parentIndex > 0) && newEntry.compareTo(heap[parentIndex]) > 0)
-        {
-            heap[newIndex] = heap[parentIndex];
-            newIndex = parentIndex;
-            parentIndex = newIndex / 2;
-        } // end while
+   /**
+    * Builds max heap using sequential insertions.
+    * @param entries The array containing the content of max heap.
+    */
+   public void createHeap_Sequential(T[] entries) {
+   	  optimal = false;
+	    checkCapacity(entries.length);
+      
+      int tempSwaps = 0;
 
-        heap[newIndex] = newEntry;
-        lastIndex++;
-        ensureCapacity();
+      for (int index = 0; index < entries.length; index++) {
+         tempSwaps = this.add(entries[index]) + tempSwaps;
+      }
+
+      swaps = tempSwaps;
+   } 
+   
+   /**
+    * Creates heap the smart way
+    * @param entries
+    */
+   public void createHeap_SmartWay(T[] entries) {
+      optimal = true;
+      int tempSwaps = 0;
+
+      checkCapacity(entries.length);  // Call other constructor
+      lastIndex = entries.length;
+      // Assertion: integrityOK = true
+
+      // Copy given array to data field
+      for (int index = 0; index < entries.length; index++)
+         heap[index + 1] = entries[index];
+
+      // Create heap
+      for (int rootIndex = lastIndex / 2; rootIndex > 0; rootIndex--)
+         tempSwaps = reheap(rootIndex) + tempSwaps;
+
+
+      swaps = tempSwaps;    
+   } // end constructor
+
+   public boolean getMethod() {
+      return optimal;
+   }
+
+   public int getSwaps() {
+      return swaps;
+   }
+   
+   public T getHeapValue_atIndex(int index) {
+      if (index > 0 && index <= lastIndex) {
+         return heap[index];
+      } else {
+         return null;
+      }
+   }
+
+
+   public int add(T newEntry)
+   {
+      int tempSwaps = 0;
+      checkIntegrity();        // Ensure initialization of data fields
+      int newIndex = lastIndex + 1;
+      int parentIndex = newIndex / 2;
+      while ( (parentIndex > 0) && newEntry.compareTo(heap[parentIndex]) > 0)
+      {
+         heap[newIndex] = heap[parentIndex];
+         newIndex = parentIndex;
+         parentIndex = newIndex / 2;
+         tempSwaps++;
+      } // end while
+
+      heap[newIndex] = newEntry;
+      lastIndex++;
+      ensureCapacity();
+
+      return tempSwaps;
+
    } // end add
 
    public T removeMax()
-    {
-        checkIntegrity();             // Ensure initialization of data fields
-        T root = null;
+   {
+      
+      checkIntegrity();             // Ensure initialization of data fields
+      T root = null;
 
-        if (!isEmpty())
-        {
-            root = heap[1];            // Return value
-            heap[1] = heap[lastIndex]; // Form a semiheap
-            lastIndex--;               // Decrease size
-            reheap(1);                 // Transform to a heap
-        } // end if
+      if (!isEmpty())
+      {
+         root = heap[1];            // Return value
+         heap[1] = heap[lastIndex]; // Form a semiheap
+         lastIndex--;               // Decrease size
+         reheap(1);                 // Transform to a heap
+      } // end if
 
-        return root;
-    } // end removeMax
+   return root;
+
+   } // end removeMax
 
 
    public T getMax()
@@ -100,81 +167,75 @@ public final class MaxHeap<T extends Comparable<? super T>>
       } // end while
       lastIndex = 0;
    } // end clear
+
+
+
+
+   // Checks if heap is at size limit, if it is create a new heap of double size.
    
-// Private methods
-// . . .
+   private void ensureCapacity() {
+      if (lastIndex >= heap.length - 1) {
+         int newLength = 2 * heap.length;
+         checkCapacity(newLength);
+         heap = Arrays.copyOf(heap, newLength);
+      }
+   }
 
-    /**
-    * Checks that the capacity is not greater than the max capacity allowed.
-    * @param capacity The given capacity to be checked for validity.
-    */
-    private void checkCapacity(int capacity) {
-        if (capacity > MAX_CAPACITY) {
-        throw new IllegalStateException("Attempt to create a heap whose " +
-                                            "capacity exceeds allowed " +
-                                            "maximum of " + MAX_CAPACITY);
-        }
-    } // end checkCapacity
+   // Checks if the capacity is not greater than the max capacity allowed.
 
-    /**
-    * Check if the integrity of the stack is maintained.
-    */
-    private void checkIntegrity() {
-        if(!integrityOK) {
-        throw new SecurityException("MaxHeap object is corrupt.");
-        }
-    } // end checkIntegrity
-
-    /**
-    * Checks if heap is at size limit, if it is create a new heap of double size.
-    */
-    private void ensureCapacity() {
-        if (lastIndex >= heap.length - 1) {
-           int newLength = 2 * heap.length;
-           checkCapacity(newLength);
-           heap = Arrays.copyOf(heap, newLength);
-        }
-    }
-
-    /**
-     * 
-     * @param rootIndex
-     * @return int representing the number of tempSwaps
-     */
-    private int reheap(int rootIndex) {
-        int tempSwaps = 0;
-        boolean done = false;
-        T orphan = heap[rootIndex];
-        int leftChildIndex = 2 * rootIndex;
-
-        while(!done && (leftChildIndex <= lastIndex)) {
-            int largerChildIndex = leftChildIndex;
-            int rightChildIndex = leftChildIndex + 1;
-
-            if ((rightChildIndex <= lastIndex) &&
-                    heap[rightChildIndex].compareTo(heap[largerChildIndex]) > 0) {
-                    
-                    largerChildIndex = rightChildIndex;
-
-            }
-
-            if (orphan.compareTo(heap[largerChildIndex]) < 0) {
-                
-                heap[rootIndex] = heap[largerChildIndex];
-                rootIndex = largerChildIndex;
-                leftChildIndex = 2 * rootIndex;
-                tempSwaps++;
-
-            } else {
-                done = true;
-            }
-        } // end while
-        heap[rootIndex] = orphan;
-        return tempSwaps;
-    } // end reheap (powerpoint version)
+   private void checkCapacity(int capacity) {
+      if (capacity > MAX_CAPACITY) {
+         throw new IllegalStateException("Attempt to create a heap whose " +
+                                          "capacity exceeds allowed " +
+                                          "maximum of " + MAX_CAPACITY);
+      }
+   } // end checkCapacity
 
 
-  public MaxHeap(T[]entries){
+   //Check if the integrity of the stack is maintained.
+   
+   private void checkIntegrity() {
+      if(!integrityOK) {
+         throw new SecurityException("MaxHeap object is corrupt.");
+      }
+   } // end checkIntegrity
+
+
+   // reheap version from powerpoint
+   private int reheap(int rootIndex) {
+      int tempSwaps = 0;
+      boolean done = false;
+      T orphan = heap[rootIndex];
+      int leftChildIndex = 2 * rootIndex;
+
+      while(!done && (leftChildIndex <= lastIndex)) {
+         int largerChildIndex = leftChildIndex;
+         int rightChildIndex = leftChildIndex + 1;
+
+         if ((rightChildIndex <= lastIndex) &&
+               heap[rightChildIndex].compareTo(heap[largerChildIndex]) > 0) {
+                  
+                  largerChildIndex = rightChildIndex;
+
+         }
+
+         if (orphan.compareTo(heap[largerChildIndex]) < 0) {
+            
+            heap[rootIndex] = heap[largerChildIndex];
+            rootIndex = largerChildIndex;
+            leftChildIndex = 2 * rootIndex;
+            tempSwaps++;
+
+         } else {
+            done = true;
+         }
+      } // end while
+      heap[rootIndex] = orphan;
+      return tempSwaps;
+   } // end reheap (powerpoint version)
+
+
+  /*   public MaxHeap(T[]entries){
       this(entries.length);
       lastIndex = entries.length;
       // Assertion: integrityOK = true
@@ -187,6 +248,6 @@ public final class MaxHeap<T extends Comparable<? super T>>
       for( int rootIndex = lastIndex / 2; rootIndex > 0; rootIndex--)
       reheap(rootIndex);
 
-    }  // end constructor 
+    } */ // end constructor 
     
 } // end MaxHeap
