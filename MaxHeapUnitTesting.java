@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class MaxHeap_UnitTesting{
+public class MaxHeapUnitTesting{
     @Test
     public void testIsEmptyNewHeap() {
         var nonEmptyHeap = new MaxHeap<Integer>();
@@ -26,39 +26,39 @@ public class MaxHeap_UnitTesting{
         assertFalse("Newly created heap should not be empty", addedToHeap.isEmpty());
         }
     
-        @Test
-        public void testClear() {
-            var clearTestHeap = new MaxHeap<Integer>();
-            clearTestHeap.add(6);
-            clearTestHeap.add(8);
-            clearTestHeap.clear();
-            assertTrue("Cleared heap should be empty", clearTestHeap.isEmpty());
-        }
-    
-        @Test
-        public void testGetMax() {
-            var maxTestHeap = new MaxHeap<Integer>();
-            maxTestHeap.add(6);
-            maxTestHeap.add(8);
-            assertTrue("max should be 8", maxTestHeap.getMax()==8);
-        }
-    
-        @Test
-        public void testGetSize() {
-            var sizeTestHeap = new MaxHeap<Integer>();
-            sizeTestHeap.add(6);
-            sizeTestHeap.add(8);
-            assertTrue("Size should be two", sizeTestHeap.getSize()==2);
-        }
-    
-        @Test
-        public void testRemoveMax() {
-            var maxTestHeap = new MaxHeap<Integer>();
-            maxTestHeap.add(6);
-            maxTestHeap.add(8);
-            maxTestHeap.removeMax();
-            assertTrue("new max should be 6", maxTestHeap.getMax()==6);
-        }
+    @Test
+    public void testClear() {
+        var clearTestHeap = new MaxHeap<Integer>();
+        clearTestHeap.add(6);
+        clearTestHeap.add(8);
+        clearTestHeap.clear();
+        assertTrue("Cleared heap should be empty", clearTestHeap.isEmpty());
+    }
+
+    @Test
+    public void testGetMax() {
+        var maxTestHeap = new MaxHeap<Integer>();
+        maxTestHeap.add(6);
+        maxTestHeap.add(8);
+        assertTrue("max should be 8", maxTestHeap.getMax()==8);
+    }
+
+    @Test
+    public void testGetSize() {
+        var sizeTestHeap = new MaxHeap<Integer>();
+        sizeTestHeap.add(6);
+        sizeTestHeap.add(8);
+        assertTrue("Size should be two", sizeTestHeap.getSize()==2);
+    }
+
+    @Test
+    public void testRemoveMax() {
+        var maxTestHeap = new MaxHeap<Integer>();
+        maxTestHeap.add(6);
+        maxTestHeap.add(8);
+        maxTestHeap.removeMax();
+        assertTrue("new max should be 6", maxTestHeap.getMax()==6);
+    }
 
     @Test
     public void testReheap(){
