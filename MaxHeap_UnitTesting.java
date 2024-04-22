@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 import org.junit.Test;
 public class MaxHeap_UnitTesting{
+
+    public void main(String[] args) throws IOException {
+        resultFileWriter("data_random.txt");
+    }
     public MaxHeap<Integer> fileToMaxHeap(String filename){
         List<Integer> dataArrayList = new ArrayList<>();
         try {
@@ -27,12 +31,13 @@ public class MaxHeap_UnitTesting{
         return newMaxHeap;
     }
     public void resultFileWriter(String inputFileName) throws IOException{
+        System.out.println("line 34");
         //Set up so files can be written on
         File resultFileName = new File("OutputFile.txt");
         FileWriter myWriter = new FileWriter(resultFileName);
         //Store first 10 values in a list
         // Create an array to hold the first ten elements
-        MaxHeap inputHeap = fileToMaxHeap(inputFileName);
+        MaxHeap<Integer> inputHeap = fileToMaxHeap(inputFileName);
         int[] firstTenArray = new int[10];
         int[] nextTenArray = new int[10];
 
